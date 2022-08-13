@@ -10,17 +10,32 @@
 </head>
 
 <body>
-  <div class = "flex flex-row">
-    <div data-cell="0" data-row="0" class="cell"></div>
-    <div data-cell="1" data-row="0" class="cell"></div>
-    <div data-cell="2" data-row="0" class="cell"></div>
-    <div data-cell="0" data-row="1" class="cell"></div>
-    <div data-cell="1" data-row="1" class="cell"></div>
-    <div data-cell="2" data-row="1" class="cell"></div>
-    <div data-cell="0" data-row="2" class="cell"></div>
-    <div data-cell="1" data-row="2" class="cell"></div>
-    <div data-cell="2" data-row="2" class="cell"></div>
+  <div class="flex flex-col">
+    <div class="flex">
+      <div data-cell="0" data-row="0" class="cell flex items-center justify-center"></div>
+      <div data-cell="1" data-row="0" class="cell flex items-center justify-center"></div>
+      <div data-cell="2" data-row="0" class="cell flex items-center justify-center"></div>
+    </div>
+    <div class="flex">
+      <div data-cell="0" data-row="1" class="cell flex items-center justify-center"></div>
+      <div data-cell="1" data-row="1" class="cell flex items-center justify-center"></div>
+      <div data-cell="2" data-row="1" class="cell flex items-center justify-center"></div>
+    </div>
+    <div class="flex">
+      <div data-cell="0" data-row="2" class="cell flex items-center justify-center"></div>
+      <div data-cell="1" data-row="2" class="cell flex items-center justify-center"></div>
+      <div data-cell="2" data-row="2" class="cell flex items-center justify-center"></div>
+    </div>
   </div>
+
+  <div>
+    <div class="message">
+      Let's play.
+    </div>
+    <button class="button">New game</button>
+  </div>
+
+  
 
   <script src="js/main.js"></script>
 </body>

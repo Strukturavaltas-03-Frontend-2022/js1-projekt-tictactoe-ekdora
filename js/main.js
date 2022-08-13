@@ -1,10 +1,11 @@
 const cols = 3;
 const rows = 3;
-const matrix = [];
+let matrix = [];
 let stepCount = 0;
 let mark = "X";
 
 const initState = () => {
+  matrix = [];
   for (let row = 0; row < rows; row += 1) {
     const row = [];
     for (let column = 0; column < cols; column++) {
@@ -18,7 +19,7 @@ const initState = () => {
 const changeMatrixValue = (element) => {
   const row = parseInt(element.dataset.row, 10);
   const cell = parseInt(element.dataset.cell, 10);
-  matrix[row][cell] = element.textContent;
+  matrix[row][cell] = element.innerHTML;
 }
 
 /**
@@ -27,9 +28,9 @@ amely kiválasztja az összes cellát,
 és mindegyik elemben elhelyez egy üres string-et.
 */
 const deleteSigns = () => {
-  const allCells = document.getElementsByClassname("cell");
+  const allCells = document.getElementsByClassName("cell");
   for (let i = 0; i < allCells.length; i++) {
-    allCells[i].textContent = "";
+    allCells[i].innerHTML = "";
   }
 }
 
@@ -45,7 +46,7 @@ amely beállítja az elem tartalmának a használt jelet,
 majd kattintásra (esemény) eltávolítja a handleClick függvényt. 
 */
 const modifyCell = (element) => {
-  element.textContent = mark;
+  element.innerHTML = mark;
   element.removeEventListener('click', handleClick);
 }
 
@@ -57,7 +58,7 @@ akkor beállítja a 0-t, hiszen a másik játékos azzal fog tenni egy jelet,
 ha pedig a 0-t használtuk, beállítja az X-et.
 */
 const setMark = () => {
-
+  mark = mark === 'X' ? 'O' : 'X';
 }
 
 /**
@@ -70,7 +71,11 @@ amely meghívja a következő függvényeket:
 - checkWinner()
 */
 const handleClick = (event) => {
-
+  increaseCounter();
+  modifyCell(event.target);
+  setMark();
+  changeMatrixValue(event.target);
+  checkWinner();
 }
 
 /**
@@ -79,7 +84,10 @@ amely kiválasztja a cellákat,
 és kattintásra (esemény) mindegyikhez hozzáadja a handleClick függvényt.
 */
 const addClickListener = () => {
-
+  const allCells = document.getElementsByClassName("cell");
+  for (let i = 0; i < allCells.length; i++) {
+    allCells[i].addEventListener('click', handleClick);
+  }
 }
 
 /**
@@ -88,7 +96,10 @@ amely kiválasztja a cellákat,
 és kattintásra (esemény) mindegyikről eltávolítja a handleClick függvényt.
 */
 const removeAllClickListeners = () => {
-
+  const allCells = document.getElementsByClassName("cell");
+  for (let i = 0; i < allCells.length; i++) {
+    allCells[i].removeEventListener('click', handleClick);
+  }
 }
 
 /**
@@ -100,14 +111,24 @@ Ha a sor minden egyes eleme 0 vagy X,
 akkor a 0 vagy az X győzött.
 Ha valaki győzött, akkor pl. egy ilyen tömböt kapunk: [true, false, false]
 */
-const checkValues = (array) => array.map(row => {/*Ide írd a kódot!*/ })
-  .indexOf(true) !== -1;
+const checkValues = (array) => {
+  return array.map(row => {
+    const prevMark = row[0];
+    let match = true;
+    for (let i = 1; i < row.length; i++) {
+      const currMark = row[i];
+      console.log(currMark, prevMark);
+      match = match && currMark && prevMark && (currMark === prevMark);
+    }
+
+    return match;
+  }).indexOf(true) !== -1;
+}
 /*
 Ha true-t kapunk visza adott sorra, akkor 
 annak indexét vizsgálva nem kaphatunk -1-et.
 Azaz az elem benne van a tömbben.
 */
-
 const checkColumnValues = () =>
   checkValues(matrix.map((array, i) =>
     array.map((item, j) => matrix[j][i])));
@@ -131,12 +152,17 @@ amely...
 */
 const checkWinner = () => {
   // ...kiírja a konzolra a checkColumnValues()t és a checkDiagonalValues()-t,
-
   /*
   majd meghívja az endGame()-et, ha hogy HA
   a checkValues(matrix) vagy a checkColumnValues() vagy a checkDiagonalValues() igaz.
   */
-
+  const rowCheck = checkValues(matrix);
+  const colCheck = checkColumnValues();
+  const diagCheck = checkDiagonalValues();
+  console.log(rowCheck, colCheck, diagCheck);
+  if (rowCheck || colCheck || diagCheck) {
+    endGame();
+  } 
 }
 
 /**
@@ -148,7 +174,8 @@ amely kiválasztja a message osztályú elemet,
 és az üzenetet állítja be a div tartalmának.
 */
 const setMessage = (message) => {
-
+  const msgElement = document.querySelector('.message');
+  msgElement.innerHTML = message;
 }
 
 /**
@@ -159,7 +186,9 @@ amely meghívja a következő függvényeket:
 - newGame()
 */
 const startGame = () => {
-
+/*   initState();
+  addClickListener(); */
+  newGame();
 }
 
 /**
@@ -176,7 +205,9 @@ Ez az utóbbi kódrészlet kiválasztja azt a jelet, amellyel a nyertes játszot
 Ezután a függvény meghívja a removeAllClickListeners() nevű függvényt.
 */
 const endGame = () => {
-
+  const msg = `The winner is Player ${mark === 'X' ? 'O' : 'X'}.`
+  setMessage(msg);
+  removeAllClickListeners();
 }
 
 /*
@@ -186,7 +217,14 @@ Hozz létre a HTML-ben a játéktéren kívül egy gombot!
 */
 const newGame = () => {
   // Válaszd ki a gombot!
-
+  const newGameBtn = document.querySelector('.button');
+  newGameBtn.addEventListener('click', () => {
+    initState();
+    addClickListener();
+    deleteSigns();
+    setMessage('Playing...');
+    setMark();
+  })
   /*
   Tegyél rá/adj hozzá egy eseményfigyelőt, 
   amely kattintásra meghívja a következő függvényeket:
@@ -196,7 +234,6 @@ const newGame = () => {
       - setMessage('Playing...')
       - setMark()
       */
-
 }
 
 startGame();
