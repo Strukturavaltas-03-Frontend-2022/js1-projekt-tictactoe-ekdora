@@ -7,7 +7,7 @@ let mark = "X";
 const initState = () => {
   for (let row = 0; row < rows; row += 1) {
     const row = [];
-    for (let column = 0; column < cols; column += 1) {
+    for (let column = 0; column < cols; column++) {
       row.push(null);
     }
     matrix.push(row);
@@ -26,33 +26,31 @@ Fejtsd ki a deleteSigns elnevezésű függvényt,
 amely kiválasztja az összes cellát, 
 és mindegyik elemben elhelyez egy üres string-et.
 */
-/* getelementbyclassname(cell) az egy iterálható tömb lesz, 
-azon végig kell iterálni és minden elem text contentjét be kell állígtani üres stringre */
 const deleteSigns = () => {
-
+  const allCells = document.getElementsByClassname("cell");
+  for (let i = 0; i < allCells.length; i++) {
+    allCells[i].textContent = "";
+  }
 }
 
 /**
 Fejtsd ki az increaseCounter elnevezésű függvényt, 
 amely a megtett lépések számát növeli eggyel.
 */
-const increaseCounter = () => {
-
-}
+const increaseCounter = () => stepCount++;
 
 /**
 Fejtsd ki a modifyCell elnevezésű függvényt, 
 amely beállítja az elem tartalmának a használt jelet,
 majd kattintásra (esemény) eltávolítja a handleClick függvényt. 
 */
-/* element textcontent beállítása és a mark beállítása neki.
-element onclick-en eltávolítani a handelclicket */
 const modifyCell = (element) => {
-
+  element.textContent = mark;
+  element.removeEventListener('click', handleClick);
 }
 
 /**
-Fejtsd ki a setMark elnevezésű függvényt, 
+Fejtsd ki a setMark elnevezésű függvényt,
 amely a jelre beállítja a következő lépésnél használt jelet úgy, 
 hogy ha az X-et használtuk éppen, azaz a jel === X, 
 akkor beállítja a 0-t, hiszen a másik játékos azzal fog tenni egy jelet,
