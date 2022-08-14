@@ -117,7 +117,6 @@ const checkValues = (array) => {
     let match = true;
     for (let i = 1; i < row.length; i++) {
       const currMark = row[i];
-      console.log(currMark, prevMark);
       match = match && currMark && prevMark && (currMark === prevMark);
     }
 
