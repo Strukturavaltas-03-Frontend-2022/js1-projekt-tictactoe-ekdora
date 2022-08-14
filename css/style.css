@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  background-color: lightgrey;
+}
+
 .flex {
   display: flex;
 }
@@ -22,9 +27,51 @@
   justify-content: flex-end;
 }
 
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.m-4 {
+  margin: 1rem;
+}
+
 .cell {
-  width: 3rem;
-  height: 3rem;
-  background-color: lightgrey;
-  border: 1px solid black;
+  width: 9rem;
+  height: 9rem;
+  background-color: teal;
+  border: 1px solid white;
+  font-family: Caveat;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 3rem;
+  color: white;
+}
+
+@font-face {
+  font-family: Caveat;
+  src: url("assets/Caveat/Caveat-VariableFont_wght.ttf");
+}
+
+.message {
+  font-size: 1.25rem;
+  font-style: italic; 
+  margin: 1rem 0;
+}
+
+.button {
+  font-size: 1.25rem;
+  font-weight: 600;
+  background-color: rgb(156, 221, 221);
+  padding: 0.5rem;
+  border: 1px solid teal;
+  border-radius: 5%;
+  ;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.msg-btn-wrapper {
+  width: calc(27rem + 6px);
 }
